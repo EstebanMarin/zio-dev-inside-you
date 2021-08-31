@@ -1,9 +1,17 @@
 package com.estebanmarin
 package zioplaygound
 
+import ourzio.*
+
 object Main extends App:
-  println("─" * 100)
+  val trace = s"[${scala.Console.BLUE}TRACE${scala.Console.RESET}]"
 
-  println("hello world")
+  val myAppLogic =
+    for
+      _ <- console.putStrLn("-" * 50)
+      _ <- console.putStrLn("What's your name?" * 50)
+      name <- console.getStrLn
+      _ <- console.putStrLn(s"Hello $name")
+    yield ()
 
-  println("─" * 100)
+  Runtime.default.unsafeRunSync(myAppLogic)
